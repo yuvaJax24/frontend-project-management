@@ -9,7 +9,7 @@ const CreateProject = ({ individualProjectData }: any) => {
   const [projectDetail, setProjectDetail] = useState<any>({
     name: "",
     description: "",
-    employeeId: "",
+    employeeId: [],
   });
   const loginInfo = JSON.parse(localStorage.getItem("employeeInfo") as string);
   const handleSave = () => {
@@ -83,12 +83,14 @@ const CreateProject = ({ individualProjectData }: any) => {
       <p>Employee</p>
       <select
         value={projectDetail?.employeeId}
-        onChange={(event) =>
-          setProjectDetail({
-            ...projectDetail,
-            employeeId: event?.target?.value,
-          })
-        }
+        onChange={(event) => {
+          if (!projectDetail?.employeeId?.includes(event?.target?.value)) {
+            setProjectDetail({
+              ...projectDetail,
+              employeeId: [...projectDetail.employeeId, event?.target?.value],
+            });
+          }
+        }}
       >
         {employeeList?.map((emp: any) => (
           <option key={emp?.id} value={emp?.id}>

@@ -65,16 +65,37 @@ const EmployeeDetails = () => {
               <th>Employee Id</th>
               <th>Email</th>
               <th>Phone</th>
+              <th>Projects</th>
             </tr>
           </thead>
           <tbody>
             {employeeDetail?.map((data: any) => (
               <tr key={data?.id}>
-                <td>{data?.name}</td>
-                <td>{data?.employeeId}</td>
-                <td>{data?.email}</td>
-                <td>{data?.phoneNumber}</td>
-                <td>
+                <td
+                  className="cursor-pointer"
+                  onClick={() => {
+                    navigate("/employee/" + data?.id);
+                  }}
+                  align="center"
+                  width={150}
+                >
+                  {data?.name}
+                </td>
+                <td align="center" width={100}>
+                  {data?.employeeId}
+                </td>
+                <td align="center" width={100}>
+                  {data?.email}
+                </td>
+                <td align="center" width={100}>
+                  {data?.phoneNumber}
+                </td>
+                <td align="center" width={100}>
+                  {data?.project
+                    ?.map((project: any) => project?.name)
+                    ?.join(", ") || "-"}
+                </td>
+                <td align="center" width={100}>
                   <button onClick={() => handleTableAction("edit", data?.id)}>
                     Edit
                   </button>

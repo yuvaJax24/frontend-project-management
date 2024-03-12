@@ -57,14 +57,28 @@ const ProjectDetails = () => {
             <tr>
               <th>Project</th>
               <th>Description</th>
+              <th>Employee</th>
             </tr>
           </thead>
           <tbody>
             {projectDetail?.map((data: any) => (
               <tr key={data?.id}>
-                <td>{data?.name}</td>
-                <td>{data?.description}</td>
-                <td>
+                <td
+                  onClick={() => {
+                    navigate("/project/" + data?.id);
+                  }}
+                  align="center"
+                  width={100}
+                >
+                  {data?.name}
+                </td>
+                <td align="center" width={100}>
+                  {data?.description}
+                </td>
+                <td align="center" width={100}>
+                  {data?.employee?.map((emp: any) => emp?.name)?.join(", ")}
+                </td>
+                <td align="center" width={100}>
                   <button onClick={() => handleTableAction("edit", data?.id)}>
                     Edit
                   </button>
