@@ -13,6 +13,13 @@ const CreateEmployee = ({ individualEmployeeData }: any) => {
     phoneNumber: 0,
   });
   const handleSave = () => {
+    const payload = {
+      email: employeeDetail?.email,
+      employeeId: employeeDetail?.employeeId,
+      name: employeeDetail?.name,
+      password: employeeDetail?.password,
+      phoneNumber: employeeDetail?.phoneNumber,
+    };
     const loginInfo = JSON.parse(
       localStorage.getItem("employeeInfo") as string
     );
@@ -21,7 +28,7 @@ const CreateEmployee = ({ individualEmployeeData }: any) => {
         ? "http://localhost:3000/employee/" + individualEmployeeData?.id
         : "http://localhost:3000/employee",
       method: individualEmployeeData?.id ? "PATCH" : "POST",
-      data: employeeDetail,
+      data: payload,
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token
       },

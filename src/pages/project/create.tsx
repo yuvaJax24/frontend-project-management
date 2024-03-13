@@ -13,12 +13,17 @@ const CreateProject = ({ individualProjectData }: any) => {
   });
   const loginInfo = JSON.parse(localStorage.getItem("employeeInfo") as string);
   const handleSave = () => {
+    const payload = {
+      name: projectDetail?.name,
+      description: projectDetail?.description,
+      employeeId: projectDetail?.employeeId,
+    };
     axios({
       url: individualProjectData?.id
         ? "http://localhost:3000/project/" + individualProjectData?.id
         : "http://localhost:3000/project",
       method: individualProjectData?.id ? "PATCH" : "POST",
-      data: projectDetail,
+      data: payload,
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token
       },
