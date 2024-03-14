@@ -5,12 +5,16 @@ import { useNavigate } from "react-router-dom";
 
 const CreateEmployee = ({ individualEmployeeData }: any) => {
   const navigate = useNavigate();
+  const loginInfo = JSON.parse(localStorage.getItem("employeeInfo") as string);
+  const [projectList, setProjectList] = useState<any>([]);
   const [employeeDetail, setEmployeeDetail] = useState<any>({
     name: "",
     employeeId: "",
     email: "",
     password: "",
     phoneNumber: 0,
+    role: "",
+    projectId: [],
   });
   const handleSave = () => {
     const payload = {
@@ -19,10 +23,9 @@ const CreateEmployee = ({ individualEmployeeData }: any) => {
       name: employeeDetail?.name,
       password: employeeDetail?.password,
       phoneNumber: employeeDetail?.phoneNumber,
+      role: employeeDetail?.role,
+      projectId: employeeDetail?.projectId,
     };
-    const loginInfo = JSON.parse(
-      localStorage.getItem("employeeInfo") as string
-    );
     axios({
       url: individualEmployeeData?.id
         ? "http://localhost:3000/employee/" + individualEmployeeData?.id
@@ -47,6 +50,24 @@ const CreateEmployee = ({ individualEmployeeData }: any) => {
       setEmployeeDetail(individualEmployeeData);
     }
   }, [individualEmployeeData]);
+  const fetchProjectData = () => {
+    axios({
+      url: "http://localhost:3000/project",
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token
+      },
+    })
+      .then((res: any) => {
+        setProjectList(res?.data?.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+  useEffect(() => {
+    fetchProjectData();
+  }, []);
   return (
     <div className="flex flex-col gap-2">
       <p>Employee Name</p>
@@ -108,6 +129,38 @@ const CreateEmployee = ({ individualEmployeeData }: any) => {
           })
         }
       />
+      <select
+        value={employeeDetail?.role}
+        onChange={(event) => {
+          setEmployeeDetail({
+            ...employeeDetail,
+            role: event?.target?.value,
+          });
+        }}
+      >
+        {["admin", "user"]?.map((emp: any) => (
+          <option key={emp} value={emp}>
+            {emp}
+          </option>
+        ))}
+      </select>
+      <select
+        value={employeeDetail?.role}
+        onChange={(event) => {
+          if (!employeeDetail?.projectId?.includes(event?.target?.value)) {
+            setEmployeeDetail({
+              ...employeeDetail,
+              projectId: [...employeeDetail.projectId, event?.target?.value],
+            });
+          }
+        }}
+      >
+        {projectList?.map((emp: any) => (
+          <option key={emp?.id} value={emp?.id}>
+            {emp?.name}
+          </option>
+        ))}
+      </select>
       <button onClick={handleSave}>
         {individualEmployeeData?.id ? "Update" : "Add"}
       </button>
