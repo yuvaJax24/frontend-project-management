@@ -25,7 +25,9 @@ const Chat = () => {
       },
     })
       .then((res: any) => {
-        setEmployeeDetail(res?.data?.data);
+        setEmployeeDetail(
+          res?.data?.data?.filter((data: any) => data?.id !== loginInfo?.id)
+        );
       })
       .catch((err) => {
         console.error(err);
@@ -37,6 +39,7 @@ const Chat = () => {
     console.log("object2", socket);
     socket.on("connection", (_socket) => {
       console.log("object3", _socket);
+      _socket.join(loginInfo?.id);
     });
     setSocketDetail(socket);
   }, []);
@@ -44,21 +47,24 @@ const Chat = () => {
   useEffect(() => {
     if (socketDetail) {
       socketDetail.on("send-message", (data: any) => {
-        const message = [...receivedMessage];
-        message.push(data);
-        setReceivedMessage((prevState) => [...prevState, data]);
+        const message = {
+          ...data,
+          isSender: data?.sender === loginInfo?.id,
+        };
+        setReceivedMessage((prevState) => [...prevState, message]);
       });
     }
   }, [socketDetail]);
 
-  console.log("object1", receivedMessage);
+  console.log("object1", receivedMessage, loginInfo);
   return (
     <div className="flex items-start w-full h-full">
       <div className="flex flex-col w-[20%]">
+        <h1 className="mb-2">Employees</h1>
         {employeeDetail?.map((emp: any) => (
           <button
-            className={`"px-2 py-4 cursor-pointer border-none outline-none bg-transparent hover:bg-slate-50 text-left ${
-              selectedEmployee?.id === emp?.id ? "bg-slate-50" : ""
+            className={`px-2 py-4 text-base w-full cursor-pointer border-none rounded-tr-none rounded-br-none outline-none bg-transparent hover:bg-slate-50 text-left ${
+              selectedEmployee?.id === emp?.id ? "!bg-slate-50" : ""
             }`}
             onClick={() => {
               setSelectedEmployee(emp);
@@ -70,16 +76,20 @@ const Chat = () => {
       </div>
       <ConditionalRender condition={!!selectedEmployee?.name}>
         <div className="flex flex-col gap-2 w-[80%]">
-          <div className="flex gap-4 flex-col-reverse h-[calc(1vh*86)] bg-slate-50 p-4 overflow-y-auto">
+          <div className="flex gap-4 flex-col justify-end h-[calc(1vh*86)] bg-slate-50 p-4 overflow-y-auto rounded">
             {receivedMessage?.map((message) => (
-              <p className="p-4 bg-[#EDEDED] w-[250px] rounded-xl">
+              <p
+                className={`p-4 bg-[#EDEDED] w-[250px] rounded-xl ${
+                  !message?.isSender ? "self-end" : ""
+                }`}
+              >
                 {message?.message}
               </p>
             ))}
           </div>
           <div className="flex items-center gap-2">
             <input
-              className="border-2 border-black w-1/2 p-1"
+              className="w-1/2"
               name="message"
               placeholder="message"
               value={message}
@@ -97,6 +107,11 @@ const Chat = () => {
               Send
             </button>
           </div>
+        </div>
+      </ConditionalRender>
+      <ConditionalRender condition={!selectedEmployee?.name}>
+        <div className="flex w-full h-[calc(1vh*86)] bg-slate-50 p-4 items-center justify-center font-normal text-lg opacity-70 rounded">
+          Chat Session
         </div>
       </ConditionalRender>
     </div>

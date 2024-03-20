@@ -49,9 +49,9 @@ const ProjectDetails = () => {
   };
   return (
     <div>
-      <p>Project</p>
+      <h1 className="mb-2">Project</h1>
       <button onClick={() => navigate("/project/create")}>Add Project</button>
-      <div>
+      <div className="mt-2">
         <table>
           <thead>
             <tr>
@@ -72,17 +72,23 @@ const ProjectDetails = () => {
                 >
                   {data?.name}
                 </td>
-                <td align="center" width={100}>
+                <td align="center" width={200}>
                   {data?.description}
                 </td>
-                <td align="center" width={100}>
+                <td align="center" width={200}>
                   {data?.employee?.map((emp: any) => emp?.name)?.join(", ")}
                 </td>
-                <td align="center" width={100}>
-                  <button onClick={() => handleTableAction("edit", data?.id)}>
+                <td align="center" width={200}>
+                  <button
+                    className="py-1"
+                    onClick={() => handleTableAction("edit", data?.id)}
+                  >
                     Edit
                   </button>
-                  <button onClick={() => handleTableAction("delete", data?.id)}>
+                  <button
+                    className="ml-4 py-1"
+                    onClick={() => handleTableAction("delete", data?.id)}
+                  >
                     Delete
                   </button>
                 </td>

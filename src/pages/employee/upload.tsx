@@ -47,7 +47,9 @@ const EmployeeUpload = () => {
   };
   return (
     <div>
-      <button onClick={handleTemplateDownload}>Download Template</button>
+      <button className="mr-2" onClick={handleTemplateDownload}>
+        Download Template
+      </button>
       <input
         type="file"
         name="file"

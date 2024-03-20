@@ -53,12 +53,15 @@ const EmployeeDetails = () => {
 
   return (
     <div>
-      <p>Employee</p>
+      <h1 className="mb-2">Employee</h1>
       <button onClick={() => navigate("/employee/create")}>Add Employee</button>
-      <button onClick={() => navigate("/employee/create/upload")}>
+      <button
+        className="ml-4"
+        onClick={() => navigate("/employee/create/upload")}
+      >
         Bulk Upload
       </button>
-      <div>
+      <div className="mt-2">
         <table>
           <thead>
             <tr>
@@ -85,22 +88,28 @@ const EmployeeDetails = () => {
                 <td align="center" width={100}>
                   {data?.employeeId}
                 </td>
-                <td align="center" width={100}>
+                <td align="center" width={200}>
                   {data?.email}
                 </td>
-                <td align="center" width={100}>
+                <td align="center" width={150}>
                   {data?.phoneNumber}
                 </td>
-                <td align="center" width={100}>
+                <td align="center" width={200}>
                   {data?.project
                     ?.map((project: any) => project?.name)
                     ?.join(", ") || "-"}
                 </td>
-                <td align="center" width={100}>
-                  <button onClick={() => handleTableAction("edit", data?.id)}>
+                <td align="center" width={200}>
+                  <button
+                    className="py-1"
+                    onClick={() => handleTableAction("edit", data?.id)}
+                  >
                     Edit
                   </button>
-                  <button onClick={() => handleTableAction("delete", data?.id)}>
+                  <button
+                    className="ml-2 py-1"
+                    onClick={() => handleTableAction("delete", data?.id)}
+                  >
                     Delete
                   </button>
                 </td>
