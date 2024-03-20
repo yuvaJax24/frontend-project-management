@@ -8,7 +8,7 @@ export const menu = [
     path: "/project",
   },
   {
-    name: "Table",
-    path: "/table",
+    name: "Chat",
+    path: "/chat",
   },
 ];

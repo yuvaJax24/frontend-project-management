@@ -9,7 +9,7 @@ import CreateProject from "../pages/project/create";
 import EditProjectDetail from "../pages/project/edit";
 import IndividualEmployee from "../pages/employee/individual";
 import IndividualProject from "../pages/project/individual";
-import Table from "../pages/table/indesx";
+import Chat from "../pages/chat";
 
 const MainRouter = () => {
   return (
@@ -25,7 +25,7 @@ const MainRouter = () => {
       <Route path="/project/:id" element={<IndividualProject />} />
       <Route path="/project/create" element={<CreateProject />} />
       <Route path="/project/edit" element={<EditProjectDetail />} />
-      <Route path="/table" element={<Table />} />
+      <Route path="/chat" element={<Chat />} />
     </Routes>
   );
 };
