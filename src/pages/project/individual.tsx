@@ -2,6 +2,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { BASE_URL } from "../../config";
 
 const IndividualProject = () => {
   const param = useParams();
@@ -15,7 +16,7 @@ const IndividualProject = () => {
 
   const fetchEmployeeData = () => {
     axios({
-      url: "http://localhost:3000/project/" + projectObjId,
+      url: `${BASE_URL}/project/${projectObjId}`,
       method: "GET",
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token

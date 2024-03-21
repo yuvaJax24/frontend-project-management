@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import socketIOClient, { Socket } from "socket.io-client";
 import ConditionalRender from "../../component/conditionalRender";
+import { BASE_URL } from "../../config";
 
 const Chat = () => {
   const loginInfo = JSON.parse(localStorage.getItem("employeeInfo") as string);
@@ -18,7 +19,7 @@ const Chat = () => {
 
   const fetchEmployeeData = () => {
     axios({
-      url: "http://localhost:3000/employee",
+      url: `${BASE_URL}/employee`,
       method: "GET",
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token
@@ -35,7 +36,7 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    const socket = socketIOClient("http://localhost:3000");
+    const socket = socketIOClient(BASE_URL);
     console.log("object2", socket);
     socket.on("connection", (_socket) => {
       console.log("object3", _socket);
@@ -54,7 +55,7 @@ const Chat = () => {
         setReceivedMessage((prevState) => [...prevState, message]);
       });
     }
-  }, [socketDetail]);
+  }, [socketDetail, loginInfo?.id]);
 
   console.log("object1", receivedMessage, loginInfo);
   return (

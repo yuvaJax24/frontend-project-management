@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../config";
 
 const ProjectDetails = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const ProjectDetails = () => {
 
   const fetchProjectData = () => {
     axios({
-      url: "http://localhost:3000/project",
+      url: `${BASE_URL}/project`,
       method: "GET",
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token
@@ -33,7 +34,7 @@ const ProjectDetails = () => {
       navigate("/project/edit", { state: projectObjId });
     } else {
       axios({
-        url: "http://localhost:3000/project/" + projectObjId,
+        url: `${BASE_URL}/project/${projectObjId}`,
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token

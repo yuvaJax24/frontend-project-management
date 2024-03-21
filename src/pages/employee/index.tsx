@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../config";
 
 const EmployeeDetails = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const EmployeeDetails = () => {
 
   const fetchEmployeeData = () => {
     axios({
-      url: "http://localhost:3000/employee",
+      url: `${BASE_URL}/employee`,
       method: "GET",
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token
@@ -36,7 +37,7 @@ const EmployeeDetails = () => {
       navigate("/employee/edit", { state: employeeObjId });
     } else {
       axios({
-        url: "http://localhost:3000/employee/" + employeeObjId,
+        url: `${BASE_URL}/employee/${employeeObjId}`,
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token

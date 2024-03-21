@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { BASE_URL } from "../../config";
 
 const IndividualEmployee = () => {
   const param = useParams();
@@ -15,7 +16,7 @@ const IndividualEmployee = () => {
 
   const fetchEmployeeData = () => {
     axios({
-      url: "http://localhost:3000/employee/" + employeeObjId,
+      url: `${BASE_URL}/employee/${employeeObjId}`,
       method: "GET",
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token

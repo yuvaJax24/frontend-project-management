@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import CreateEmployee from "./create";
+import { BASE_URL } from "../../config";
 
 const EditEmployeeDetail = () => {
   const location = useLocation();
@@ -12,7 +13,7 @@ const EditEmployeeDetail = () => {
 
   useEffect(() => {
     axios({
-      url: "http://localhost:3000/employee/" + employeeObjId,
+      url: `${BASE_URL}/employee/${employeeObjId}`,
       method: "GET",
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token

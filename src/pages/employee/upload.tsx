@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
+import { BASE_URL } from "../../config";
 
 const EmployeeUpload = () => {
   const loginInfo = JSON.parse(localStorage.getItem("employeeInfo") as string);
   const handleTemplateDownload = () => {
     axios({
-      url: "http://localhost:3000/report/employee",
+      url: `${BASE_URL}/report/employee`,
       method: "GET",
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token
@@ -31,7 +32,7 @@ const EmployeeUpload = () => {
     const formData = new FormData();
     formData.append("file", uploadedFile);
     axios({
-      url: "http://localhost:3000/report/employee-upload",
+      url: `${BASE_URL}/report/employee-upload`,
       method: "POST",
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token

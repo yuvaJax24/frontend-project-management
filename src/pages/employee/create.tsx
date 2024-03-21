@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../config";
 
 const CreateEmployee = ({ individualEmployeeData }: any) => {
   const navigate = useNavigate();
@@ -28,8 +29,8 @@ const CreateEmployee = ({ individualEmployeeData }: any) => {
     };
     axios({
       url: individualEmployeeData?.id
-        ? "http://localhost:3000/employee/" + individualEmployeeData?.id
-        : "http://localhost:3000/employee",
+        ? `${BASE_URL}/employee/${individualEmployeeData?.id}`
+        : `${BASE_URL}/employee`,
       method: individualEmployeeData?.id ? "PATCH" : "POST",
       data: payload,
       headers: {
@@ -52,7 +53,7 @@ const CreateEmployee = ({ individualEmployeeData }: any) => {
   }, [individualEmployeeData]);
   const fetchProjectData = () => {
     axios({
-      url: "http://localhost:3000/project",
+      url: `${BASE_URL}/project`,
       method: "GET",
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token

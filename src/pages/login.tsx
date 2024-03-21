@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../config";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Login = () => {
   });
   const handleLogin = () => {
     axios({
-      url: "http://localhost:3000/login",
+      url: `${BASE_URL}/login`,
       method: "POST",
       data: loginDetails,
     })

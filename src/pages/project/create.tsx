@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../config";
 
 const CreateProject = ({ individualProjectData }: any) => {
   const navigate = useNavigate();
@@ -20,8 +21,8 @@ const CreateProject = ({ individualProjectData }: any) => {
     };
     axios({
       url: individualProjectData?.id
-        ? "http://localhost:3000/project/" + individualProjectData?.id
-        : "http://localhost:3000/project",
+        ? `${BASE_URL}/project/${individualProjectData?.id}`
+        : `${BASE_URL}/project`,
       method: individualProjectData?.id ? "PATCH" : "POST",
       data: payload,
       headers: {
@@ -39,7 +40,7 @@ const CreateProject = ({ individualProjectData }: any) => {
   };
   const fetchEmployeeData = () => {
     axios({
-      url: "http://localhost:3000/employee",
+      url: `${BASE_URL}/employee`,
       method: "GET",
       headers: {
         Authorization: "Bearer " + loginInfo?.accessTokken, //the token is a variable which holds the token
